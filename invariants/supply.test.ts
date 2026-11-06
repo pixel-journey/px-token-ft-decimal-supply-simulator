@@ -16,12 +16,25 @@ describe("createToken", () => {
     assert.equal(t.spec.precision, 8);
   });
 
+  it("accepts precision 0 and 18", () => {
+    assert.equal(createToken("AAA", 0, 100n).spec.precision, 0);
+    assert.equal(createToken("BBB", 18, 100n).spec.precision, 18);
+  });
+
   it("refuses precision above 18", () => {
     assert.throws(() => createToken("WAX", 19, 100n), /precision/);
   });
 
+  it("refuses negative precision", () => {
+    assert.throws(() => createToken("WAX", -1, 100n), /precision/);
+  });
+
   it("refuses zero maxSupply", () => {
     assert.throws(() => createToken("WAX", 4, 0n), /maxSupply/);
+  });
+
+  it("refuses a bad symbol", () => {
+    assert.throws(() => createToken("wax", 4, 100n), /bad symbol/);
   });
 });
 
@@ -32,9 +45,20 @@ describe("issue / retire", () => {
     assert.equal(t.supply, 5000n);
   });
 
+  it("issues exactly to maxSupply", () => {
+    let t = createToken("PXJ", 4, 100n);
+    t = issue(t, 100n);
+    assert.equal(t.supply, 100n);
+  });
+
   it("refuses issue past maxSupply", () => {
     const t = createToken("PXJ", 4, 100n);
     assert.throws(() => issue(t, 101n), /maxSupply/);
+  });
+
+  it("refuses zero issue", () => {
+    const t = createToken("PXJ", 4, 100n);
+    assert.throws(() => issue(t, 0n), /positive/);
   });
 
   it("retires and refuses over-retire", () => {
@@ -43,6 +67,19 @@ describe("issue / retire", () => {
     t = retire(t, 20n);
     assert.equal(t.supply, 30n);
     assert.throws(() => retire(t, 31n), /exceeds supply/);
+  });
+
+  it("refuses zero retire", () => {
+    let t = createToken("PXJ", 4, 100n);
+    t = issue(t, 10n);
+    assert.throws(() => retire(t, 0n), /positive/);
+  });
+
+  it("full retire leaves zero supply", () => {
+    let t = createToken("PXJ", 4, 100n);
+    t = issue(t, 40n);
+    t = retire(t, 40n);
+    assert.equal(t.supply, 0n);
   });
 });
 
