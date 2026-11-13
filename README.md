@@ -1,42 +1,34 @@
-# px-token-ft-decimal-supply-simulator
+# Precision, max supply, and whole-unit scaling
 
-> **Trust:** private educational lab (Tier A)  
-> **Quest:** 112 — FT decimal / supply ceiling lab  
-> **Vault:** [px-contract-examples-vault](https://github.com/pixel-journey/px-contract-examples-vault)
+> **Domain:** FT decimals / supply ceiling  
+> **Sources:** [SOURCES.md](SOURCES.md)  
+> **Path:** [TREASURY-TOKEN-LEARNING-PATH.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/TREASURY-TOKEN-LEARNING-PATH.md)
 
-**One-sentence goal:** Teach **precision 0–18**, **maxSupply**, and **MAX_AMOUNT (2^62−1)** bounds for issue/retire and whole-unit scaling — with real tests.
+**Goal:** Teach **precision 0–18**, **maxSupply**, and **MAX_AMOUNT (2^62−1)** for issue/retire and whole-unit scaling. **PXJ uses precision 8.**
 
-**Real code:** `npm test`. **Not** a deployed `eosio.token`, **not** wasm.
+**Code under test:** `npm test`. Not a deployed `eosio.token`, not wasm.
 
----
+## Learning materials
+
+| Doc | Role |
+| --- | --- |
+| [EDUCATION.md](EDUCATION.md) | Course |
+| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Issue, scale, overflow |
+| [TIPS.md](TIPS.md) | PXJ@8 |
+| [SECURITY.md](SECURITY.md) | Bounds |
+| [SOURCES.md](SOURCES.md) | Official |
 
 ## What is true (executed)
 
 | Rule | Result |
-|------|--------|
-| `createToken` | supply starts at 0; precision 0–18; maxSupply > 0 |
-| `issue` | within maxSupply; past max refused |
-| `retire` | cannot exceed supply |
-| `wholeToAmount(1, 4)` | `10000n` |
-| `wholeToAmount` overflow | refused against MAX_AMOUNT |
+| --- | --- |
+| createToken | supply 0; precision 0–18 |
+| issue / retire | maxSupply and supply gates |
+| wholeToAmount(1, 4) | `10000n` |
+| overflow scale | refused |
 
 ```bash
 npm test
 ```
-
----
-
-## Layout
-
-| Path | Role |
-|------|------|
-| `invariants/supply.ts` | create / issue / retire / scale |
-| `invariants/supply.test.ts` | Executed claims |
-| `EDUCATION.md` | Why precision hits the int64 ceiling |
-| `SECURITY.md` | Supply and overflow surface |
-
-Related: `px-token-dust-truncation-visualizer`, `px-token-dex-differentiated-tax`.
-
-## License
 
 MIT — Pixel Journey
