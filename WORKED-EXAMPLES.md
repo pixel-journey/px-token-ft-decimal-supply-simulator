@@ -1,21 +1,20 @@
-# Worked examples — FT precision and supply
+# Worked examples — FT precision and supply bounds
 
 ## createToken
 
-`createToken("WAX", 8, 1_000_000_00000000n)` starts at supply 0, precision 8.
-
-| Input | Result |
-| --- | --- |
-| precision 0 or 18 | ok |
-| precision 19 or -1 | precision error |
-| maxSupply 0 | maxSupply error |
-| symbol `wax` (lowercase) | bad symbol |
+Starts at supply **0**. Precision **0** and **18** accepted; **19** and **-1** refused. Zero maxSupply refused. Symbol must match uppercase style (`wax` fails).
 
 ## issue / retire
 
-PXJ precision 4, max 100: issue 50 → 50; issue 101 → maxSupply; issue 0 → positive.
-
-Issue 50, retire 20 → 30. Retire 31 → exceeds supply. Full retire to 0 allowed. Zero retire refused.
+| Op | Result |
+| --- | --- |
+| issue 5000 of max 10000 | supply 5000 |
+| issue exactly max | ok |
+| issue 101 of max 100 | maxSupply |
+| issue 0 | positive |
+| issue 50, retire 20 | supply 30 |
+| retire 31 of 30 | exceeds supply |
+| full retire | supply 0 |
 
 ## wholeToAmount
 
@@ -25,6 +24,6 @@ Issue 50, retire 20 → 30. Retire 31 → exceeds supply. Full retire to 0 allow
 | 1 | 8 | 100_000_000 |
 | 1 | 0 | 1 |
 
-`wholeToAmount(MAX_AMOUNT, 2)` throws. `canRepresentWhole(1n, 8)` true; `(MAX_AMOUNT, 2)` false.
+`wholeToAmount(MAX_AMOUNT, 2)` refuses. `canRepresentWhole(1, 8)` true; `canRepresentWhole(MAX_AMOUNT, 2)` false.
 
-**PXJ is always precision 8** in the Pixel Journey stack. This lab also exercises 0..18 for teaching bounds.
+PXJ product convention remains precision **8** in other labs; this simulator explores the full 0–18 range safely against `MAX_AMOUNT`.
