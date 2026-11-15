@@ -1,26 +1,30 @@
-# Worked examples — precision and max supply
+# Worked examples — FT precision and supply
 
-## Example A — create
+## createToken
 
-`createToken("PXJ", 8, 1_000_000_00000000n)` → supply 0, precision 8.
+`createToken("WAX", 8, 1_000_000_00000000n)` starts at supply 0, precision 8.
 
-## Example B — issue to ceiling
+| Input | Result |
+| --- | --- |
+| precision 0 or 18 | ok |
+| precision 19 or -1 | precision error |
+| maxSupply 0 | maxSupply error |
+| symbol `wax` (lowercase) | bad symbol |
 
-Issue within maxSupply ok; one unit past max refused.
+## issue / retire
 
-## Example C — retire
+PXJ precision 4, max 100: issue 50 → 50; issue 101 → maxSupply; issue 0 → positive.
 
-Cannot retire more than supply.
+Issue 50, retire 20 → 30. Retire 31 → exceeds supply. Full retire to 0 allowed. Zero retire refused.
 
-## Example D — whole units
+## wholeToAmount
 
-`wholeToAmount(1n, 4) === 10000n`  
-`wholeToAmount(1n, 8) === 100000000n` (PXJ-style)
+| whole | precision | amount |
+| --- | --- | --- |
+| 1 | 4 | 10_000 |
+| 1 | 8 | 100_000_000 |
+| 1 | 0 | 1 |
 
-## Example E — overflow guard
+`wholeToAmount(MAX_AMOUNT, 2)` throws. `canRepresentWhole(1n, 8)` true; `(MAX_AMOUNT, 2)` false.
 
-Large whole × high precision that exceeds MAX_AMOUNT (2^62−1) → refused.
-
-## Example F — canRepresentWhole
-
-Returns false when `wholeToAmount` would throw.
+**PXJ is always precision 8** in the Pixel Journey stack. This lab also exercises 0..18 for teaching bounds.
