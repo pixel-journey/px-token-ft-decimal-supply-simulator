@@ -31,4 +31,4 @@
 
 ## Honesty limits
 
-Supply counter only. Related: [ledger](https://github.com/pixel-journey/px-token-balance-ledger) · `px-token-dust-truncation-visualizer` (private; not this public course).
+Supply counter only. Related: [ledger](https://github.com/pixel-journey/px-token-balance-ledger) · [px-token-dust-truncation-visualizer](https://github.com/pixel-journey/px-token-dust-truncation-visualizer).

@@ -18,6 +18,6 @@ This simulator allows precision **0–18** so students can see the mistake. Prod
 | --- | --- |
 | [ledger](https://github.com/pixel-journey/px-token-balance-ledger) | sum(balances) === supply |
 | [hybrid blend](https://github.com/pixel-journey/px-blend-hybrid-ft-plus-nft) | Refuses 4-decimal PXJ |
-| `px-token-dust-truncation-visualizer` (private; not this public course) | Floor tax at a fixed precision |
+| [px-token-dust-truncation-visualizer](https://github.com/pixel-journey/px-token-dust-truncation-visualizer) | Floor tax at a fixed precision |
 | [dex tax](https://github.com/pixel-journey/px-token-dex-differentiated-tax) | Bigint, not Number |
 | `px-contract-examples-vault` (private; not this public course) | Units first |

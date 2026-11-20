@@ -31,8 +31,8 @@
 - Balance table ([ledger](https://github.com/pixel-journey/px-token-balance-ledger)).  
 - Transfer tax on issue/retire paths.  
 - Issuer auth + pause.  
-- Dust thresholds at a given bps (`px-token-dust-truncation-visualizer` (private; not this public course)).
+- Dust thresholds at a given bps ([px-token-dust-truncation-visualizer](https://github.com/pixel-journey/px-token-dust-truncation-visualizer)).
 
 ## Related
 
-[ledger](https://github.com/pixel-journey/px-token-balance-ledger) · `px-token-dust-truncation-visualizer` (private; not this public course) · [dex tax](https://github.com/pixel-journey/px-token-dex-differentiated-tax) · [invariant-kit quantity](https://github.com/pixel-journey/px-invariant-kit)
+[ledger](https://github.com/pixel-journey/px-token-balance-ledger) · [px-token-dust-truncation-visualizer](https://github.com/pixel-journey/px-token-dust-truncation-visualizer) · [dex tax](https://github.com/pixel-journey/px-token-dex-differentiated-tax) · [invariant-kit quantity](https://github.com/pixel-journey/px-invariant-kit)
